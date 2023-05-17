@@ -16,7 +16,7 @@ const connection = mysql.createConnection({
 });
 
 // API endpoint to check solutions available
-app.get('/api/solutions/solutionCount', (req, res) => {
+app.get('/api/chess/solutionCount', (req, res) => {
     const query = `SELECT COUNT(id) as solutionCount FROM chess_solutions`;
 
     connection.query(query, (error, results) => {
@@ -30,7 +30,7 @@ app.get('/api/solutions/solutionCount', (req, res) => {
 });
 
 // API endpoint to check solutions are all figured out and clear the answers
-app.get('/api/solutions/allSolutionsFigured', (req, res) => {
+app.get('/api/chess/allSolutionsFigured', (req, res) => {
     const query1 = `SELECT COUNT(id) as solutionCount FROM chess_solutions`;
     const query2 = `SELECT COUNT(id) as figuredCount FROM chess_answers`;
     const query3 = `TRUNCATE TABLE chess_answers`;
@@ -75,7 +75,7 @@ app.get('/api/solutions/allSolutionsFigured', (req, res) => {
 });
 
 // API endpoint to insert solutions
-app.post('/api/solutions/insertSolutions', (req, res) => {
+app.post('/api/chess/insertSolutions', (req, res) => {
 
     const solutionStrings = req.body.solutions;
 
@@ -94,7 +94,7 @@ app.post('/api/solutions/insertSolutions', (req, res) => {
 });
 
 // API endpoint to answer a solution
-app.post('/api/solutions/checkAnswerSolution', (req, res) => {
+app.post('/api/chess/checkAnswerSolution', (req, res) => {
 
     const solutionString = req.body.solution;
 
@@ -132,7 +132,7 @@ app.post('/api/solutions/checkAnswerSolution', (req, res) => {
 });
 
 // API endpoint to insert answer
-app.post('/api/solutions/insertAnswer', (req, res) => {
+app.post('/api/chess/insertAnswer', (req, res) => {
 
     const userName = req.body.userName;
     const solutionString = req.body.solution;
