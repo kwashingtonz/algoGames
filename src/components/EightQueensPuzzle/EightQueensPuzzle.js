@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './EightQueensPuzzle.css';
 import { useNavigate } from 'react-router-dom';
-import { solutionCount, insertSolutions } from '../../api/api';
+import { solutionCount, insertSolutions, allSolutionsFigured, checkAnswerSolution, insertAnswer } from '../../api/api';
 
 
 const EightQueensPuzzle = () => {
@@ -109,7 +109,7 @@ const EightQueensPuzzle = () => {
   };
 
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const matrix = [];
     for (let row = 0; row < 8; row++) {
       const rowData = [];
@@ -124,7 +124,48 @@ const EightQueensPuzzle = () => {
       matrix.push(rowData);
     }
 
+    //get matrix string of the answer
     const matrixString = JSON.stringify(matrix);
+
+    try {
+      const response = await checkAnswerSolution(matrixString);
+      if (response.status === 200) {
+        
+        if(!response.data.available && response.data.correct){
+
+          let userName = prompt(response.data.message+" [Leave blank to be anonymous]");
+
+          if(userName===""){
+            userName = "anonymous"
+          }
+
+          // insert chess_answer record
+          const insert = await insertAnswer(userName,matrixString);
+          alert(insert.data.message);
+
+        }else{
+          alert(response.data.message);
+        }
+
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      alert(error);
+    }
+
+
+    //clearing the flag when all answers have been figured
+    try {
+      const response = await allSolutionsFigured();
+      if (response.status === 200) {
+        let message = response.data.message;
+        alert(message)
+      }
+    } catch (error) {
+      alert(error);
+    }
+
   };
 
 
