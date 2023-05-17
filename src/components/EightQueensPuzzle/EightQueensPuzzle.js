@@ -1,16 +1,98 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './EightQueensPuzzle.css';
 import { useNavigate } from 'react-router-dom';
+import { solutionCount, insertSolutions } from '../../api/api';
+
 
 const EightQueensPuzzle = () => {
   const navigate = useNavigate();
   const [queensCount, setQueensCount] = useState(8);
   const [queensPositions, setQueensPositions] = useState([]);
-  const [solutionMatrix, setSolutionMatrix] = useState([]);
+
+
+  useEffect(() => {
+    // Check the count of `chess_solutions` table in the database
+    const addingSolutions = async () => {
+
+      let count;
+      try {
+        const response = await solutionCount();
+        count = response.data.count;
+      } catch (error) {
+        alert(error);
+      }
+
+      if (count === 0) {
+        // Generate and insert possible solutions using backtracking algorithm
+        const solutions = [];
+        solveQueensProblem(0, [], solutions);
+
+        const solutionsAsMatrices = solutions.map(positions => {
+          const matrix = Array.from({ length: 8 }, () => Array(8).fill(0));
+          for (let col = 0; col < 8; col++) {
+            const row = positions[col];
+            matrix[row][col] = 1;
+          }
+          return matrix;
+        });
+
+        const solutionsAsString = solutionsAsMatrices.map(matrix =>
+          JSON.stringify(matrix)
+        );
+
+        try {
+          const response = await insertSolutions(solutionsAsString);
+          if (response.status === 200) {
+            alert(response.data.message);
+          } else {
+            alert(response.data.message);
+          }
+
+
+        } catch (error) {
+          alert(error);
+        }
+
+      }
+    }
+
+    addingSolutions();
+  }, []);
 
   const handleBack = () => {
     navigate(-1);
   };
+
+
+  const solveQueensProblem = (col, positions, solutions) => {
+    if (col === 8) {
+      solutions.push([...positions]);
+      return;
+    }
+
+    for (let row = 0; row < 8; row++) {
+      if (isSafe(row, col, positions)) {
+        positions[col] = row;
+        solveQueensProblem(col + 1, positions, solutions);
+      }
+    }
+  };
+
+
+  const isSafe = (row, col, positions) => {
+    for (let i = 0; i < col; i++) {
+      const prevRow = positions[i];
+      if (
+        prevRow === row ||
+        prevRow + (col - i) === row ||
+        prevRow - (col - i) === row
+      ) {
+        return false;
+      }
+    }
+    return true;
+  };
+
 
   const handleSquareClick = (row, col) => {
     const squareId = `${row}-${col}`;
@@ -26,6 +108,7 @@ const EightQueensPuzzle = () => {
     }
   };
 
+
   const handleSubmit = () => {
     const matrix = [];
     for (let row = 0; row < 8; row++) {
@@ -40,11 +123,10 @@ const EightQueensPuzzle = () => {
       }
       matrix.push(rowData);
     }
-    setSolutionMatrix(matrix);
 
     const matrixString = JSON.stringify(matrix);
-    console.log(matrixString);
   };
+
 
   const renderChessboard = () => {
     const squares = [];
@@ -68,7 +150,9 @@ const EightQueensPuzzle = () => {
     return squares;
   };
 
+
   const isSubmitDisabled = queensCount !== 0;
+
 
   return (
     <div className="center-container">
@@ -82,7 +166,7 @@ const EightQueensPuzzle = () => {
       <button className="submit-button" onClick={handleSubmit} disabled={isSubmitDisabled}>
         Submit
       </button>
-      
+
     </div>
   );
 };

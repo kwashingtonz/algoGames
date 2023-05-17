@@ -2,6 +2,10 @@
 const express = require('express');
 const mysql = require('mysql2');
 const app = express();
+const cors = require('cors');
+
+app.use(express.json());
+app.use(cors());
 
 // MySQL database connection
 const connection = mysql.createConnection({
@@ -11,52 +15,37 @@ const connection = mysql.createConnection({
   database: 'algogamesdb',
 });
 
-// API endpoint to check table existence
-app.get('/api/solutions/table-exists', (req, res) => {
-  const query = `SELECT 1 FROM solutions LIMIT 1`;
+// API endpoint to check solutions available
+app.get('/api/solutions/solutionCount', (req, res) => {
+  const query = `SELECT COUNT(id) as solutionCount FROM chess_solutions`;
 
-  connection.query(query, (error) => {
+  connection.query(query, (error,results) => {
     if (error) {
-      console.error('Table does not exist:', error);
-      res.send({ exists: false });
+      console.error('DB Error:', error);
+      res.send(error);
     } else {
-      res.send({ exists: true });
-    }
-  });
-});
-
-// API endpoint to create table
-app.get('/api/solutions/create-table', (req, res) => {
-  const query = `CREATE TABLE IF NOT EXISTS solutions (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    solution VARCHAR(64) NOT NULL
-  )`;
-
-  connection.query(query, (error) => {
-    if (error) {
-      console.error('Error creating table:', error);
-      res.send({ success: false });
-    } else {
-      res.send({ success: true });
+      res.send({ count: results[0].solutionCount });
     }
   });
 });
 
 // API endpoint to insert solutions
-app.post('/api/solutions/insert', (req, res) => {
-  const solutions = req.body.solutions;
-  const values = solutions.map((solution) => [solution]);
+app.post('/api/solutions/insertSolutions', (req, res) => {
 
-  const query = `INSERT INTO solutions (solution) VALUES ?`;
-
-  connection.query(query, [values], (error) => {
+    const solutionStrings = req.body.solutions;
+    
+     const query = 'INSERT INTO chess_solutions (solution) VALUES ?';
+     const values = solutionStrings.map(solution => [solution]);
+  
+    connection.query(query, [values], (error) => {
     if (error) {
-      console.error('Error inserting solutions:', error);
-      res.send({ success: false });
-    } else {
-      res.send({ success: true });
-    }
-  });
+        console.error('DB Error:', error);
+        res.status(500).json({ success: false, message: 'Failed to insert solutions.' });
+      } else {
+        res.status(200).json({ success: true, message: 'Solutions inserted successfully to DB.' });
+      }
+    });
+  
 });
 
 // Start the server
