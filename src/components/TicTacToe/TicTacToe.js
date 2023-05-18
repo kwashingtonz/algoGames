@@ -59,6 +59,29 @@ const TicTacToe = () => {
 
   const makeComputerMove = () => {
     if (!isGameOver(board)) {
+
+      if (isEmptyBoard(board)) {
+        const emptyCells = [];
+        for (let i = 0; i < 3; i++) {
+          for (let j = 0; j < 3; j++) {
+            if (board[i][j] === null) {
+              emptyCells.push({ rowIndex: i, colIndex: j });
+            }
+          }
+        }
+  
+        if (emptyCells.length > 0) {
+          const randomIndex = Math.floor(Math.random() * emptyCells.length);
+          const { rowIndex, colIndex } = emptyCells[randomIndex];
+  
+          const newBoard = board.map((row, rIndex) =>
+            rIndex === rowIndex ? row.map((cell, cIndex) => (cIndex === colIndex ? "O" : cell)) : row
+          );
+          setBoard(newBoard);
+          setCurrentTurn("player");
+        }
+    } else {
+
       const bestMove = findBestMove(board);
       if (bestMove) {
         const newBoard = board.map((row, rIndex) =>
@@ -81,6 +104,18 @@ const TicTacToe = () => {
         }
       }
     }
+    }
+  };
+
+  const isEmptyBoard = (currentBoard) => {
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (currentBoard[i][j] !== null) {
+          return false;
+        }
+      }
+    }
+    return true;
   };
 
   const findBestMove = (currentBoard) => {
