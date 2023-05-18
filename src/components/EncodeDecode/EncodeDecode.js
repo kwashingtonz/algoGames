@@ -317,7 +317,7 @@ const EncodeDecode = () => {
         <div className="guess-interface">
           <h1>Guess the Encoded</h1>
           <h3>Random string : {randomString1}</h3>
-          <input type="text" placeholder="Enter encoded value (Binary [0s and 1s])" onKeyDown={handleKeyDown} ref={encodeRef} />
+          <input className="input-encode" type="text" placeholder="Enter encoded value (Binary [0s and 1s])" onKeyDown={handleKeyDown} ref={encodeRef} />
           <button onClick={decodeSubmit}>Check</button>
         </div>
       )}
@@ -326,7 +326,7 @@ const EncodeDecode = () => {
         <div className="decode-interface">
           <h1>Guess the Decoded</h1>
           <h3>Encoded string : {encodedString2}</h3>
-          <input type="text" placeholder="Enter decoded value" onKeyDown={handleKeyDownEn} ref={decodeRef} />
+          <input className='input-decode' type="text" placeholder="Enter decoded value" onKeyDown={handleKeyDownEn} ref={decodeRef} />
           <button onClick={encodeSubmit}>Check</button>
         </div>
       )}

@@ -3,6 +3,15 @@
     display: inline-block;
   }
   
+  .restart-button{
+    margin-left:140px;
+    margin-bottom: 10px;
+  }
+
+  .tip{
+    text-align: center;
+  }
+
   .row {
     display: flex;
   }
