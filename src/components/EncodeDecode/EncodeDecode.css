@@ -9,14 +9,15 @@
 
 .radio-buttons label {
   display: flex;
-  align-items: center;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .radio-buttons input[type="radio"] {
-  margin-top: 8px;
   margin-left: -10px;
-  width: 50px;
+  width:35px;
+  height: 13px;
+  cursor: pointer;
 }
 
 .guess-interface,
@@ -51,6 +52,7 @@ h3 {
 button {
   padding: 10px 20px;
   background-color: #007bff;
+  border-radius: 50px;
   color: #fff;
   border: none;
   cursor: pointer;
