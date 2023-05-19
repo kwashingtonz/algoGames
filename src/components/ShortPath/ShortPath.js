@@ -115,8 +115,6 @@ const ShortPath = () => {
       return { ...acc, [city]: filteredInnerObj };
     }, {});
 
-    // console.log(filteredData)
-
     setFilteredDistances(filteredData)
 
     const shortestDistances = dijkstra(startCity, filteredData);
@@ -282,59 +280,70 @@ const ShortPath = () => {
     if (Object.keys(answerObj).length !== 0) {
         let ans = JSON.stringify(answerObj);
         let sol = JSON.stringify(shortDistances);
+        let data = JSON.stringify(filteredDistances);//1500 length
 
         if(ans === sol){
-          alert("Correct!");
+
+          let userName = prompt("Correct! Please enter your name [Leave blank to be anonymous]");
+
+          if(userName===""){
+            userName = "anonymous"
+          }
 
           
 
 
-          tryCount = 3;
+          resetGame();
+
         }else{
           alert(`Not a valid answer! ${tryCount === 0 ? `No` : tryCount} tries left`);
           tryCount -= 1;
         }
 
         if(tryCount < 0 ){
-
-          if(startCity !== 'City A'){
-            aRef.current.value = "";
-          }
-          if(startCity !== 'City B'){
-            bRef.current.value = "";
-          }
-          if(startCity !== 'City C'){
-            cRef.current.value = "";
-          }
-          if(startCity !== 'City D'){
-            dRef.current.value = "";
-          }
-          if(startCity !== 'City E'){
-            eRef.current.value = "";
-          }
-          if(startCity !== 'City F'){
-            fRef.current.value = "";
-          }
-          if(startCity !== 'City G'){
-            gRef.current.value = "";
-          }
-          if(startCity !== 'City H'){
-            hRef.current.value = "";
-          }
-          if(startCity !== 'City I'){
-            iRef.current.value = "";
-          }
-          if(startCity !== 'City J'){
-            jRef.current.value = "";
-          }
-
-          tryCount = 3;
-          generateCityDistances();
+            resetGame();
         }
 
     }
 
 
+  };
+
+  const resetGame = () => {
+    
+    if(startCity !== 'City A'){
+      aRef.current.value = "";
+    }
+    if(startCity !== 'City B'){
+      bRef.current.value = "";
+    }
+    if(startCity !== 'City C'){
+      cRef.current.value = "";
+    }
+    if(startCity !== 'City D'){
+      dRef.current.value = "";
+    }
+    if(startCity !== 'City E'){
+      eRef.current.value = "";
+    }
+    if(startCity !== 'City F'){
+      fRef.current.value = "";
+    }
+    if(startCity !== 'City G'){
+      gRef.current.value = "";
+    }
+    if(startCity !== 'City H'){
+      hRef.current.value = "";
+    }
+    if(startCity !== 'City I'){
+      iRef.current.value = "";
+    }
+    if(startCity !== 'City J'){
+      jRef.current.value = "";
+    }
+
+    tryCount = 3;
+    generateCityDistances();
   };
 
   return (

@@ -20,26 +20,25 @@ const EncodeDecode = () => {
   const [code2, setCode2] = useState();
 
   useEffect(() => {
-    const generateRandomString = () => {
-      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let string1 = '';
-      let string2 = '';
-
-      for (let i = 0; i < 30; i++) {
-        string1 += characters.charAt(Math.floor(Math.random() * characters.length));
-        string2 += characters.charAt(Math.floor(Math.random() * characters.length));
-      }
-
-      setRandomString1(string1);
-      setRandomString2(string2);
-
-      setEncodedString1(encodingText(string1, "one"));
-      setEncodedString2(encodingText(string2, "two"));
-    };
-
     generateRandomString();
   }, []);
 
+  const generateRandomString = () => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let string1 = '';
+    let string2 = '';
+
+    for (let i = 0; i < 30; i++) {
+      string1 += characters.charAt(Math.floor(Math.random() * characters.length));
+      string2 += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+
+    setRandomString1(string1);
+    setRandomString2(string2);
+
+    setEncodedString1(encodingText(string1, "one"));
+    setEncodedString2(encodingText(string2, "two"));
+  };
 
   const handleBack = () => {
     navigate(-1);
@@ -244,6 +243,7 @@ const EncodeDecode = () => {
         let text = decodingText(value, "one")
         if(text === randomString1){
           alert("You have successfully guessed the encoded value");
+          generateRandomString();
         }else{
           alert("You have failed to guess the encoded value");
         }
@@ -261,6 +261,7 @@ const EncodeDecode = () => {
         let encodedtext = encodingText(value, "two");
         if(encodedtext === encodedString2){
           alert("You have successfully guessed the decoded value");
+          generateRandomString();
         }else{
           alert("You have failed to guess the decoded value");
         }

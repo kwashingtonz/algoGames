@@ -5,6 +5,10 @@
     justify-content: center;
     height: 100vh;
   }
+
+  .text-center{
+    font-size: 40px;
+  }
   
   .button-wrapper {
     display: flex;
