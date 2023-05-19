@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './ShortPath.css';
 import { useNavigate } from 'react-router-dom';
+import { insertDijkstraAnswer } from '../../api/api';
 
 class PriorityQueue {
   constructor() {
@@ -158,7 +159,7 @@ const ShortPath = () => {
     return shortestDistances;
   };
 
-  const checkValidity = () => {
+  const checkValidity = async () => {
 
     let a, b, c, d, e, f, g, h, i, j;
 
@@ -290,8 +291,8 @@ const ShortPath = () => {
             userName = "anonymous"
           }
 
-          
-
+          const insert = await insertDijkstraAnswer(userName,ans, data);
+          alert(insert.data.message);
 
           resetGame();
 

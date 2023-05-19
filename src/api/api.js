@@ -23,4 +23,8 @@ export const insertAnswer = (userName,solutionAsString) => {
     return axios.post(`${API_BASE_URL}/chess/insertAnswer`, { userName: userName, solution: solutionAsString });
 };
 
+export const insertDijkstraAnswer = (userName,answer,distances) => {
+    return axios.post(`${API_BASE_URL}/dijkstra/insertAnswer`, { userName: userName, answer: answer, distances:distances });
+};
+
 
