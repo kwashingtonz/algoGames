@@ -108,6 +108,7 @@ const ShortPath = () => {
     const shortestDistances = dijkstra(startCity, filteredData);
 
     setShortDistances(shortestDistances);
+    console.log(shortestDistances)
   };
 
 
@@ -162,7 +163,7 @@ const ShortPath = () => {
           <tbody>
             {Object.keys(cityDistances).map(city => (
               <tr key={city}>
-                <td>{city}</td>
+                <td className='td-city'>{city}</td>
                 {Object.keys(cityDistances[city]).filter(city => city !== 'City J').map(otherCity => (
                   <td key={otherCity}>{cityDistances[city][otherCity]}</td>
                 ))}
@@ -177,6 +178,20 @@ const ShortPath = () => {
           </tr>
         </table>
       )}
+      <h1>Start City : {startCity} &nbsp; (Enter Shortest Path for Each City)</h1>
+      <div class="input-row">
+        {startCity!=='City A' ? <input type='number' placeholder='City A (km)' className='dist-input'></input> :<></>}
+        {startCity!=='City B' ? <input type='number' placeholder='City B (km)' className='dist-input'></input> :<></>}
+        {startCity!=='City C' ? <input type='number' placeholder='City C (km)' className='dist-input'></input> :<></>}
+        {startCity!=='City D' ? <input type='number' placeholder='City D (km)' className='dist-input'></input> :<></>}
+        {startCity!=='City E' ? <input type='number' placeholder='City E (km)' className='dist-input'></input> :<></>}
+        {startCity!=='City F' ? <input type='number' placeholder='City F (km)' className='dist-input'></input> :<></>}
+        {startCity!=='City G' ? <input type='number' placeholder='City G (km)' className='dist-input'></input> :<></>}
+        {startCity!=='City H' ? <input type='number' placeholder='City H (km)' className='dist-input'></input> :<></>}
+        {startCity!=='City I' ? <input type='number' placeholder='City I (km)' className='dist-input'></input> :<></>}
+        {startCity!=='City J' ? <input type='number' placeholder='City J (km)' className='dist-input'></input> :<></>}
+        <button>Submit</button>
+      </div>
     </div>
   );
 };
