@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './ShortPath.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -26,9 +26,21 @@ class PriorityQueue {
 
 
 const ShortPath = () => {
+
+  const aRef = useRef(null);
+  const bRef = useRef(null);
+  const cRef = useRef(null);
+  const dRef = useRef(null);
+  const eRef = useRef(null);
+  const fRef = useRef(null);
+  const gRef = useRef(null);
+  const hRef = useRef(null);
+  const iRef = useRef(null);
+  const jRef = useRef(null);
+
   const navigate = useNavigate();
   const [cityDistances, setCityDistances] = useState({});
-  
+
   const [startCity, setStartCity] = useState('');
   const [filteredDistances, setFilteredDistances] = useState({});
   const [shortDistances, setShortDistances] = useState({});
@@ -39,8 +51,10 @@ const ShortPath = () => {
 
   useEffect(() => {
     generateCityDistances();
-    
+
   }, []);
+
+  let tryCount = 3;
 
   const generateCityDistances = () => {
     const cities = ['City A', 'City B', 'City C', 'City D', 'City E', 'City F', 'City G', 'City H', 'City I', 'City J'];
@@ -104,7 +118,7 @@ const ShortPath = () => {
     // console.log(filteredData)
 
     setFilteredDistances(filteredData)
-    
+
     const shortestDistances = dijkstra(startCity, filteredData);
 
     setShortDistances(shortestDistances);
@@ -114,26 +128,26 @@ const ShortPath = () => {
 
   const dijkstra = (startCity, distances) => {
     const shortestDistances = {};
-  
+
     // Initialize all distances as infinity except the start city
     for (const city in distances) {
       shortestDistances[city] = city === startCity ? 0 : Infinity;
     }
-  
+
     const visited = new Set();
     const queue = new PriorityQueue();
     queue.enqueue(startCity, 0);
-  
+
     while (!queue.isEmpty()) {
       const currentCity = queue.dequeue();
       visited.add(currentCity);
-  
+
       // Process neighbors of the current city
       for (const neighborCity in distances[currentCity]) {
         if (!visited.has(neighborCity)) {
           const distanceToNeighbor = distances[currentCity][neighborCity];
           const totalDistance = shortestDistances[currentCity] + distanceToNeighbor;
-  
+
           // Update shortest distance if a shorter path is found
           if (totalDistance < shortestDistances[neighborCity]) {
             shortestDistances[neighborCity] = totalDistance;
@@ -142,14 +156,190 @@ const ShortPath = () => {
         }
       }
     }
-  
+
     return shortestDistances;
   };
-  
+
+  const checkValidity = () => {
+
+    let a, b, c, d, e, f, g, h, i, j;
+
+    let answerObj = {}
+
+    if (aRef.current) {
+      a = parseInt(aRef.current.value);
+    }
+    if (bRef.current) {
+      b = parseInt(bRef.current.value);
+    }
+    if (cRef.current) {
+      c = parseInt(cRef.current.value);
+    }
+    if (dRef.current) {
+      d = parseInt(dRef.current.value);
+    }
+    if (eRef.current) {
+      e = parseInt(eRef.current.value);
+    }
+    if (fRef.current) {
+      f = parseInt(fRef.current.value);
+    }
+    if (gRef.current) {
+      g = parseInt(gRef.current.value);
+    }
+    if (hRef.current) {
+      h = parseInt(hRef.current.value);
+    }
+    if (iRef.current) {
+      i = parseInt(iRef.current.value);
+    }
+    if (jRef.current) {
+      j = parseInt(jRef.current.value);
+    }
+
+    if (startCity === "City A") {
+
+      if (!isNaN(b) && !isNaN(c) && !isNaN(d) && !isNaN(e) && !isNaN(f) && !isNaN(g) && !isNaN(h) && !isNaN(i) && !isNaN(j)) {
+        answerObj = { "City A": 0, "City B": b, "City C": c, "City D": d, "City E": e, "City F": f, "City G": g, "City H": h, "City I": i, "City J": j };
+      } else {
+        alert("Please enter all distances!");
+      }
+
+    } else if (startCity === "City B") {
+
+      if (!isNaN(a) && !isNaN(c) && !isNaN(d) && !isNaN(e) && !isNaN(f) && !isNaN(g) && !isNaN(h) && !isNaN(i) && !isNaN(j)) {
+        answerObj = { "City A": a, "City B": 0, "City C": c, "City D": d, "City E": e, "City F": f, "City G": g, "City H": h, "City I": i, "City J": j };
+      } else {
+        alert("Please enter all distances!");
+      }
+
+    } else if (startCity === "City C") {
+
+      if (!isNaN(a) && !isNaN(b) && !isNaN(d) && !isNaN(e) && !isNaN(f) && !isNaN(g) && !isNaN(h) && !isNaN(i) && !isNaN(j)) {
+        answerObj = { "City A": a, "City B": b, "City C": 0, "City D": d, "City E": e, "City F": f, "City G": g, "City H": h, "City I": i, "City J": j };
+      } else {
+        alert("Please enter all distances!");
+      }
+
+    } else if (startCity === "City D") {
+
+      if (!isNaN(a) && !isNaN(b) && !isNaN(c) && !isNaN(e) && !isNaN(f) && !isNaN(g) && !isNaN(h) && !isNaN(i) && !isNaN(j)) {
+        answerObj = { "City A": a, "City B": b, "City C": c, "City D": 0, "City E": e, "City F": f, "City G": g, "City H": h, "City I": i, "City J": j };
+      } else {
+        alert("Please enter all distances!");
+      }
+
+    } else if (startCity === "City E") {
+
+      if (!isNaN(a) && !isNaN(b) && !isNaN(c) && !isNaN(d) && !isNaN(f) && !isNaN(g) && !isNaN(h) && !isNaN(i) && !isNaN(j)) {
+        answerObj = { "City A": a, "City B": b, "City C": c, "City D": d, "City E": 0, "City F": f, "City G": g, "City H": h, "City I": i, "City J": j };
+      } else {
+        alert("Please enter all distances!");
+      }
+
+    } else if (startCity === "City F") {
+
+      if (!isNaN(a) && !isNaN(b) && !isNaN(c) && !isNaN(d) && !isNaN(e) && !isNaN(g) && !isNaN(h) && !isNaN(i) && !isNaN(j)) {
+        answerObj = { "City A": a, "City B": b, "City C": c, "City D": d, "City E": e, "City F": 0, "City G": g, "City H": h, "City I": i, "City J": j };
+      } else {
+        alert("Please enter all distances!");
+      }
+
+    } else if (startCity === "City G") {
+
+      if (!isNaN(a) && !isNaN(b) && !isNaN(c) && !isNaN(d) && !isNaN(e) && !isNaN(f) && !isNaN(h) && !isNaN(i) && !isNaN(j)) {
+        answerObj = { "City A": a, "City B": b, "City C": c, "City D": d, "City E": e, "City F": f, "City G": 0, "City H": h, "City I": i, "City J": j };
+      } else {
+        alert("Please enter all distances!");
+      }
+
+    } else if (startCity === "City H") {
+
+      if (!isNaN(a) && !isNaN(b) && !isNaN(c) && !isNaN(d) && !isNaN(e) && !isNaN(f) && !isNaN(g) && !isNaN(i) && !isNaN(j)) {
+        answerObj = { "City A": a, "City B": b, "City C": c, "City D": d, "City E": e, "City F": f, "City G": g, "City H": 0, "City I": i, "City J": j };
+      } else {
+        alert("Please enter all distances!");
+      }
+
+    } else if (startCity === "City I") {
+
+      if (!isNaN(a) && !isNaN(b) && !isNaN(c) && !isNaN(d) && !isNaN(e) && !isNaN(f) && !isNaN(g) && !isNaN(h) && !isNaN(j)) {
+        answerObj = { "City A": a, "City B": b, "City C": c, "City D": d, "City E": e, "City F": f, "City G": g, "City H": h, "City I": 0, "City J": j };
+      } else {
+        alert("Please enter all distances!");
+      }
+
+    } else {
+
+      if (!isNaN(a) && !isNaN(b) && !isNaN(c) && !isNaN(d) && !isNaN(e) && !isNaN(f) && !isNaN(g) && !isNaN(h) && !isNaN(i)) {
+        answerObj = { "City A": a, "City B": b, "City C": c, "City D": d, "City E": e, "City F": f, "City G": g, "City H": h, "City I": i, "City J": 0 };
+      } else {
+        alert("Please enter all distances!");
+      }
+
+    }
+
+    if (Object.keys(answerObj).length !== 0) {
+        let ans = JSON.stringify(answerObj);
+        let sol = JSON.stringify(shortDistances);
+
+        if(ans === sol){
+          alert("Correct!");
+
+          
+
+
+          tryCount = 3;
+        }else{
+          alert(`Not a valid answer! ${tryCount === 0 ? `No` : tryCount} tries left`);
+          tryCount -= 1;
+        }
+
+        if(tryCount < 0 ){
+
+          if(startCity !== 'City A'){
+            aRef.current.value = "";
+          }
+          if(startCity !== 'City B'){
+            bRef.current.value = "";
+          }
+          if(startCity !== 'City C'){
+            cRef.current.value = "";
+          }
+          if(startCity !== 'City D'){
+            dRef.current.value = "";
+          }
+          if(startCity !== 'City E'){
+            eRef.current.value = "";
+          }
+          if(startCity !== 'City F'){
+            fRef.current.value = "";
+          }
+          if(startCity !== 'City G'){
+            gRef.current.value = "";
+          }
+          if(startCity !== 'City H'){
+            hRef.current.value = "";
+          }
+          if(startCity !== 'City I'){
+            iRef.current.value = "";
+          }
+          if(startCity !== 'City J'){
+            jRef.current.value = "";
+          }
+
+          tryCount = 3;
+          generateCityDistances();
+        }
+
+    }
+
+
+  };
 
   return (
 
-    
+
     <div className="center-container">
       <button className="back-button" onClick={handleBack}>
         Back
@@ -157,9 +347,6 @@ const ShortPath = () => {
       <h1 className="puzzle-title">Identify Shortest Path (Dijkstra's Algorithm)</h1>
       {cityDistances && (
         <table className='city-distances-table'>
-
-
-
           <tbody>
             {Object.keys(cityDistances).map(city => (
               <tr key={city}>
@@ -180,17 +367,17 @@ const ShortPath = () => {
       )}
       <h1>Start City : {startCity} &nbsp; (Enter Shortest Path for Each City)</h1>
       <div class="input-row">
-        {startCity!=='City A' ? <input type='number' placeholder='City A (km)' className='dist-input'></input> :<></>}
-        {startCity!=='City B' ? <input type='number' placeholder='City B (km)' className='dist-input'></input> :<></>}
-        {startCity!=='City C' ? <input type='number' placeholder='City C (km)' className='dist-input'></input> :<></>}
-        {startCity!=='City D' ? <input type='number' placeholder='City D (km)' className='dist-input'></input> :<></>}
-        {startCity!=='City E' ? <input type='number' placeholder='City E (km)' className='dist-input'></input> :<></>}
-        {startCity!=='City F' ? <input type='number' placeholder='City F (km)' className='dist-input'></input> :<></>}
-        {startCity!=='City G' ? <input type='number' placeholder='City G (km)' className='dist-input'></input> :<></>}
-        {startCity!=='City H' ? <input type='number' placeholder='City H (km)' className='dist-input'></input> :<></>}
-        {startCity!=='City I' ? <input type='number' placeholder='City I (km)' className='dist-input'></input> :<></>}
-        {startCity!=='City J' ? <input type='number' placeholder='City J (km)' className='dist-input'></input> :<></>}
-        <button>Submit</button>
+        {startCity !== 'City A' ? <input type='number' placeholder='City A (km)' className='dist-input' ref={aRef} /> : <></>}
+        {startCity !== 'City B' ? <input type='number' placeholder='City B (km)' className='dist-input' ref={bRef} /> : <></>}
+        {startCity !== 'City C' ? <input type='number' placeholder='City C (km)' className='dist-input' ref={cRef} /> : <></>}
+        {startCity !== 'City D' ? <input type='number' placeholder='City D (km)' className='dist-input' ref={dRef} /> : <></>}
+        {startCity !== 'City E' ? <input type='number' placeholder='City E (km)' className='dist-input' ref={eRef} /> : <></>}
+        {startCity !== 'City F' ? <input type='number' placeholder='City F (km)' className='dist-input' ref={fRef} /> : <></>}
+        {startCity !== 'City G' ? <input type='number' placeholder='City G (km)' className='dist-input' ref={gRef} /> : <></>}
+        {startCity !== 'City H' ? <input type='number' placeholder='City H (km)' className='dist-input' ref={hRef} /> : <></>}
+        {startCity !== 'City I' ? <input type='number' placeholder='City I (km)' className='dist-input' ref={iRef} /> : <></>}
+        {startCity !== 'City J' ? <input type='number' placeholder='City J (km)' className='dist-input' ref={jRef} /> : <></>}
+        <button onClick={checkValidity}>Submit</button>
       </div>
     </div>
   );
