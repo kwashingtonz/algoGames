@@ -14,7 +14,7 @@ const MinConnectors = () => {
       <button className="back-button" onClick={handleBack}>
         Back
       </button>
-      <h1 className="puzzle-title">Identify Minimum Connectors</h1>
+      <h1 className="puzzle-title">Identify Minimum Connectors (Prim's Algorithm)</h1>      
      
     </div>
   );
