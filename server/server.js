@@ -209,7 +209,7 @@ app.post('/api/chess/insertAnswer', (req, res) => {
 
 });
 
-// API endpoint to insert answer
+// API endpoint to insert answer for the dijsktra game
 app.post('/api/dijkstra/insertAnswer', (req, res) => {
 
     const userName = req.body.userName;
@@ -218,6 +218,35 @@ app.post('/api/dijkstra/insertAnswer', (req, res) => {
 
     const createTableQuery = 'CREATE TABLE IF NOT EXISTS dijkstra_answers (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), answer VARCHAR(1000), distances VARCHAR(1500))';
     const query = 'INSERT INTO dijkstra_answers (name,answer,distances) VALUES ?';
+    const values = [[userName, answer, distances]]
+
+    connection.query(createTableQuery, (error) => {
+        if (error) {
+            console.error('DB Error:', error);
+            res.status(500).json({ success: false, message: 'Failed to create table.' });
+        } else {
+            connection.query(query, [values], (error) => {
+                if (error) {
+                    console.error('DB Error:', error);
+                    res.status(500).json({ success: false, message: 'Failed to insert answer.' });
+                } else {
+                    res.status(200).json({ success: true, message: 'Answer inserted successfully to DB.' });
+                }
+            });
+        }
+    });
+
+});
+
+// API endpoint to insert answer for the prim game
+app.post('/api/prim/insertAnswer', (req, res) => {
+
+    const userName = req.body.userName;
+    const answer = req.body.answer;
+    const distances = req.body.distances;
+
+    const createTableQuery = 'CREATE TABLE IF NOT EXISTS prim_answers (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), answer VARCHAR(1000), distances VARCHAR(1500))';
+    const query = 'INSERT INTO prim_answers (name,answer,distances) VALUES ?';
     const values = [[userName, answer, distances]]
 
     connection.query(createTableQuery, (error) => {

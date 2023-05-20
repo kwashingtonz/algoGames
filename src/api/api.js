@@ -27,4 +27,8 @@ export const insertDijkstraAnswer = (userName,answer,distances) => {
     return axios.post(`${API_BASE_URL}/dijkstra/insertAnswer`, { userName: userName, answer: answer, distances:distances });
 };
 
+export const insertPrimAnswer = (userName,answer,distances) => {
+    return axios.post(`${API_BASE_URL}/prim/insertAnswer`, { userName: userName, answer: answer, distances:distances });
+};
+
 
