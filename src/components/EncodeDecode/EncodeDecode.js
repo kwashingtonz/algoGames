@@ -253,6 +253,7 @@ const EncodeDecode = () => {
 
 
   const encodeSubmit = () => {
+    console.log(randomString2)
     if (decodeRef.current) {
       const value = decodeRef.current.value;
       if (value === "") {
