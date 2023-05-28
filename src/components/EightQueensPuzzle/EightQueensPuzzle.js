@@ -63,7 +63,7 @@ const EightQueensPuzzle = () => {
     navigate(-1);
   };
 
-
+  // checking is done with recursion
   const solveQueensProblem = (col, positions, solutions) => {
     if (col === 8) {
       solutions.push([...positions]);
@@ -78,7 +78,7 @@ const EightQueensPuzzle = () => {
     }
   };
 
-
+  //this is the script which checks wheather each move is safe or not
   const isSafe = (row, col, positions) => {
     for (let i = 0; i < col; i++) {
       const prevRow = positions[i];
@@ -94,6 +94,8 @@ const EightQueensPuzzle = () => {
   };
 
 
+  // this will set the count of available queens on the hand and maintain it
+  // when a queen is placed the respective position data will be added to the "QueensPositions" state array
   const handleSquareClick = (row, col) => {
     const squareId = `${row}-${col}`;
     if (queensPositions.includes(squareId)) {
@@ -169,6 +171,8 @@ const EightQueensPuzzle = () => {
   };
 
 
+  // this will create the chess board.      
+  // then 'click to add queen' functionlity will be set
   const renderChessboard = () => {
     const squares = [];
     for (let row = 0; row < 8; row++) {

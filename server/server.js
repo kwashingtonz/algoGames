@@ -11,7 +11,7 @@ app.use(cors());
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'kaliya234',
+    password: '',
     database: 'algogamesdb',
 });
 
