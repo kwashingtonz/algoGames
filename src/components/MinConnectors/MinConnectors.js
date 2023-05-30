@@ -125,45 +125,32 @@ const MinConnectors = () => {
 
 
   const checkValidity = async () => {
-
     let answer;
-
     if (answerRef.current) {
       answer = parseInt(answerRef.current.value);
     }
-
     if (!isNaN(answer)) {
       let ans = answer;
       let sol = minimumDistance;
       let data = JSON.stringify(filteredDistances);//1500 length
-
       if (ans === sol) {
-
         let userName = prompt("Correct! Please enter your name [Leave blank to be anonymous]");
-
         if (userName === "") {
           userName = "anonymous"
         }
-
         const insert = await insertPrimAnswer(userName, ans, data);
         alert(insert.data.message);
-
         resetGame();
-
       } else {
         alert(`Not a valid answer! ${tryCount === 0 ? `No` : tryCount} tries left`);
         tryCount -= 1;
       }
-
       if (tryCount < 0) {
         resetGame();
       }
     } else {
       alert("Please enter minimum distance!");
     }
-
-
-
   };
 
   const resetGame = () => {

@@ -72,7 +72,8 @@ const ShortPath = () => {
       distances[city] = {};
       cities.forEach(otherCity => {
         if (city !== otherCity) {
-          const distance = Math.floor(Math.random() * (50 - 5 + 1) + 5); // Generate random distance between 5km and 50km
+          const distance = Math.floor(Math.random() * (50 - 5 + 1) + 5); 
+          // Generate random distance between 5km and 50km
           distances[city][otherCity] = distance;
         } else {
           distances[city][otherCity] = "";
@@ -124,7 +125,7 @@ const ShortPath = () => {
     console.log(shortestDistances)
   };
 
-
+  // calculates distances
   const dijkstra = (startCity, distances) => {
     const shortestDistances = {};
 

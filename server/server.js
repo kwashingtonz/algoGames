@@ -160,7 +160,8 @@ app.post('/api/chess/checkAnswerSolution', (req, res) => {
                                         res.status(500).json({ success: false, message: 'DB Error' });
                                     } else {
                                         if (results[0].availableCount > 0) {
-                                            res.status(200).json({ correct: true, available: true, message: 'Solution is correct. But the solution is figured it out already. Try other solutions please.' });
+                                            res.status(200).json({ correct: true, available: true, message: 
+                                                'Solution is correct. But the solution is figured it out already. Try other solutions please.' });
                                         } else {
                                             res.status(200).json({ correct: true, available: false, message: 'Solution is correct. Please Enter your name and Try other solutions as well!' });
                                         }
@@ -187,7 +188,8 @@ app.post('/api/chess/insertAnswer', (req, res) => {
     const userName = req.body.userName;
     const solutionString = req.body.solution;
 
-    const createTableQuery = 'CREATE TABLE IF NOT EXISTS chess_answers (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), solution VARCHAR(255))';
+    const createTableQuery = 
+    'CREATE TABLE IF NOT EXISTS chess_answers (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), solution VARCHAR(255))';
     const query = 'INSERT INTO chess_answers (name,solution) VALUES ?';
     const values = [[userName, solutionString]]
 
@@ -235,7 +237,6 @@ app.post('/api/dijkstra/insertAnswer', (req, res) => {
             });
         }
     });
-
 });
 
 // API endpoint to insert answer for the prim game
